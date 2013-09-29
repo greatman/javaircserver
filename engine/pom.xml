@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project information -->
+    <name>IRCServer Engine</name>
+    <artifactId>ircserver-engine</artifactId>
+    <packaging>jar</packaging>
+    <url>http://www.greatmancode.com</url>
+    <inceptionYear>2013</inceptionYear>
+    <description>Engine for the IRC server.</description>
+
+    <!-- Parent information -->
+    <parent>
+        <groupId>com.greatmancode</groupId>
+        <artifactId>ircserver-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- Build properties -->
+    <properties>
+        <project.root>..</project.root>
+    </properties>
+
+    <!-- Project dependencies -->
+    <dependencies>
+
+    </dependencies>
+
+    <!-- Reporting configuration -->
+    <reporting>
+        <!-- Reporting plugins -->
+        <plugins>
+            <!-- Javadoc creation plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <sourcepath>src/main/java/org/spout/api</sourcepath>
+                    <bottom>
+                        <![CDATA[Copyright (c) {project.inceptionYear} <a href="${project.organization.url}" target="_blank">${project.organization.name}</a>. ${project.name} is licensed under <a href="http://www.gnu.org/licenses/lgpl.html" target="_blank">GNU Lesser General Public License Version 3</a>]]></bottom>
+                    <doctitle><![CDATA[${project.name} API ${project.version}-b${buildNumber}]]></doctitle>
+                    <windowtitle>${project.name} Javadocs</windowtitle>
+                    <author>false</author>
+                    <version>false</version>
+                </configuration>
+            </plugin>
+            <!-- Surefire report plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.15</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
