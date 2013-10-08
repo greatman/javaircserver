@@ -60,9 +60,9 @@
 
     <!-- Source code access -->
     <scm>
-        <connection>scm:git:git://github.com/SpoutDev/Spout.git</connection>
-        <developerConnection>scm:git:git@github.com:SpoutDev/Spout.git</developerConnection>
-        <url>https://github.com/SpoutDev/Spout</url>
+        <connection>scm:git:git://github.com/greatman/IRCServer.git</connection>
+        <developerConnection>scm:git:git@github.com:greatman/IRCServer.git</developerConnection>
+        <url>https://github.com/greatman/IRCServer</url>
     </scm>
 
     <!-- Continuous integration -->
