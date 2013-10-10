@@ -18,9 +18,13 @@
  */
 package com.greatmancode.ircserver.api;
 
+import com.greatmancode.ircserver.api.net.Protocol;
+
 public interface Server {
 
     public void onStart();
 
     public void onStop();
+
+    public Protocol getProtocol();
 }

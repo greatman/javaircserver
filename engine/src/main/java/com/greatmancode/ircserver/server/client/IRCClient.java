@@ -14,6 +14,7 @@ public class IRCClient extends Client {
     private String username;
     private String hostname;
     private String nickname;
+    private String realname;
     private ChannelHandlerContext socket;
 
     public IRCClient(ChannelHandlerContext socket) {
@@ -31,13 +32,38 @@ public class IRCClient extends Client {
     }
 
     @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
     public String getHostname() {
         return hostname;
     }
 
     @Override
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    @Override
     public String getNickname() {
         return nickname;
+    }
+
+    @Override
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    @Override
+    public String getRealName() {
+        return realname;
+    }
+
+    @Override
+    public void setRealName(String realName) {
+        this.realname = realName;
     }
 
     @Override

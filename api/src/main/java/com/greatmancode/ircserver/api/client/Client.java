@@ -29,15 +29,19 @@ public abstract class Client {
 
     public abstract String getUsername();
 
-    public abstract String setUsername(String username);
+    public abstract void setUsername(String username); //TODO: Do some checks if the username already exist
 
     public abstract String getHostname();
 
-    public abstract String setHostname(String hostname);
+    public abstract void setHostname(String hostname); //TODO: Do some checks if the username already exist
 
     public abstract String getNickname();
 
-    public abstract void setNickname(String nickname);
+    public abstract void setNickname(String nickname); //TODO: Do some checks if the username already exist
+
+    public abstract String getRealName();
+
+    public abstract void setRealName(String realName);
 
     public abstract List<Channel> getchannelList();
 

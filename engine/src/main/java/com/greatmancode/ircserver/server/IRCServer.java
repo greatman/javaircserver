@@ -19,8 +19,10 @@
 package com.greatmancode.ircserver.server;
 
 import com.greatmancode.ircserver.api.Server;
+import com.greatmancode.ircserver.api.net.Protocol;
 import com.greatmancode.ircserver.server.net.IRCChannelInitializer;
 import com.greatmancode.ircserver.server.net.IRCServerNetworkHandler;
+import com.greatmancode.ircserver.server.net.packet.IRCProtocol;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -32,6 +34,13 @@ import io.netty.handler.logging.LoggingHandler;
 public class IRCServer implements Server {
 
     public static final int PORT = 6667;
+    private IRCProtocol protocol = new IRCProtocol();
+    private static IRCServer instance;
+
+    public IRCServer() {
+        IRCServer.instance = this;
+    }
+
     @Override
     public void onStart() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -53,5 +62,14 @@ public class IRCServer implements Server {
     @Override
     public void onStop() {
 
+    }
+
+    @Override
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public static IRCServer getInstance() {
+        return instance;
     }
 }
