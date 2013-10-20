@@ -138,6 +138,8 @@
                     <execution>
                         <configuration>
                             <properties>
+                                <name>${project.name}</name>
+                                <copyright>Copyright (c) ${project.inceptionYear}-2013, ${project.organization.name}</copyright>
                                 <url>${project.organization.url}</url>
                                 <inceptionYear>${project.inceptionYear}</inceptionYear>
                                 <organization>${project.organization.name}</organization>
