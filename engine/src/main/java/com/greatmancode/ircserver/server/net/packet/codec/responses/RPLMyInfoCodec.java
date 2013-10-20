@@ -16,23 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ${name}.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.api;
+package com.greatmancode.ircserver.server.net.packet.codec.responses;
 
-import com.greatmancode.ircserver.api.client.ClientManager;
-import com.greatmancode.ircserver.api.net.Protocol;
-import com.greatmancode.ircserver.api.parameters.ServerParameter;
+import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
+import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLMyInfoMessage;
 
-import java.util.List;
+public class RPLMyInfoCodec extends MessageCodec<RPLMyInfoMessage> {
 
-public interface Server {
+    public RPLMyInfoCodec() {
+        super(RPLMyInfoMessage.class,"004");
+    }
 
-    public void onStart();
-
-    public void onStop();
-
-    public Protocol getProtocol();
-
-    public ClientManager getClientManager();
-
-    public List<ServerParameter> getParameters();
+    @Override
+    public String encode(RPLMyInfoMessage message) {
+        return message.getNickname() + " " + message.getServerName() + " " + message.getVersion() + " " + message.getAvailableUserMode() + " " + message.getAvailableChannelMode();
+    }
 }

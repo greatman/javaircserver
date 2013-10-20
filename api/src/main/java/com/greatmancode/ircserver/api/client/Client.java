@@ -49,6 +49,10 @@ public abstract class Client {
         return getNickname() + "!" + getUsername() + "@" + getHostname();
     }
 
+    public void disconnect(String disconnectMessage) {
+        sendQuit(disconnectMessage);
+        getSocket().disconnect();
+    }
     public void sendQuit(String quitMessage) {
         for (Channel channel : getchannelList()) {
             channel.sendMessage(this, "");

@@ -16,23 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ${name}.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.api;
+package com.greatmancode.ircserver.server.net.packet.codec.responses;
 
-import com.greatmancode.ircserver.api.client.ClientManager;
-import com.greatmancode.ircserver.api.net.Protocol;
-import com.greatmancode.ircserver.api.parameters.ServerParameter;
+import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
+import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLCreatedMessage;
 
-import java.util.List;
+public class RPLCreatedCodec extends MessageCodec<RPLCreatedMessage> {
 
-public interface Server {
+    public RPLCreatedCodec() {
+        super(RPLCreatedMessage.class, "003");
+    }
 
-    public void onStart();
-
-    public void onStop();
-
-    public Protocol getProtocol();
-
-    public ClientManager getClientManager();
-
-    public List<ServerParameter> getParameters();
+    public String encode(RPLCreatedMessage message) {
+        return message.getNickname() + " :This server was created " + message.getDate();
+    }
 }

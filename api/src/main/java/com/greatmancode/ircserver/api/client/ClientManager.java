@@ -16,23 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ${name}.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.api;
+package com.greatmancode.ircserver.api.client;
 
-import com.greatmancode.ircserver.api.client.ClientManager;
-import com.greatmancode.ircserver.api.net.Protocol;
-import com.greatmancode.ircserver.api.parameters.ServerParameter;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public interface Server {
+public class ClientManager {
 
-    public void onStart();
+    public List<Client> clientList = new ArrayList<>();
 
-    public void onStop();
+    public Client addClient(Client client) {
+        clientList.add(client);
+        return client;
+    }
 
-    public Protocol getProtocol();
+    public void removeClient(Client client) {
+        clientList.remove(client);
 
-    public ClientManager getClientManager();
+        //client.disconnect("Disconnected");
+    }
 
-    public List<ServerParameter> getParameters();
+    public Client getClient(String nickname) {
+        for (Client client : clientList) {
+            if (client.getNickname().equals(nickname)) {
+                return client;
+            }
+        }
+        return null;
+    }
 }

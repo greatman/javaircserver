@@ -19,7 +19,9 @@
 package com.greatmancode.ircserver.server;
 
 import com.greatmancode.ircserver.api.Server;
+import com.greatmancode.ircserver.api.client.ClientManager;
 import com.greatmancode.ircserver.api.net.Protocol;
+import com.greatmancode.ircserver.api.parameters.ServerParameter;
 import com.greatmancode.ircserver.server.net.IRCChannelInitializer;
 import com.greatmancode.ircserver.server.net.IRCServerNetworkHandler;
 import com.greatmancode.ircserver.server.net.packet.IRCProtocol;
@@ -31,10 +33,15 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
+import java.util.List;
+
 public class IRCServer implements Server {
 
     public static final int PORT = 6667;
+    public static final String serverName = "localhost.com";
+    public static final String version = "0.0.1";
     private IRCProtocol protocol = new IRCProtocol();
+    private ClientManager clientManager = new ClientManager();
     private static IRCServer instance;
 
     public IRCServer() {
@@ -71,5 +78,15 @@ public class IRCServer implements Server {
 
     public static IRCServer getInstance() {
         return instance;
+    }
+
+    @Override
+    public ClientManager getClientManager() {
+        return clientManager;
+    }
+
+    @Override
+    public List<ServerParameter> getParameters() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
