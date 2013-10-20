@@ -28,6 +28,6 @@ public class RPLLUserClientCodec extends MessageCodec<RPLLUserClientMessage> {
     }
 
     public String encode(RPLLUserClientMessage message) {
-        return message.getUsername() + " :There are" + message.getUserCount() + " users and " + message.getServiceCount() + " services on " + message.getServerCount() + " servers";
+        return message.getNickname() + " :There are" + message.getUserCount() + " users and " + message.getServiceCount() + " services on " + message.getServerCount() + " servers";
     }
 }
