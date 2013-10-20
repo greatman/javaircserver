@@ -20,21 +20,16 @@ package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-public class RPLCreatedMessage implements Message {
+public class RPLCreatedMessage extends MessageUsername {
 
-    private final String date, nickname;
+    private final String date;
 
     public RPLCreatedMessage(String nickname, String date) {
-        this.nickname = nickname;
+        super(nickname);
         this.date = date;
     }
 
     public String getDate() {
         return date;
     }
-
-    public String getNickname() {
-        return nickname;
-    }
-
 }

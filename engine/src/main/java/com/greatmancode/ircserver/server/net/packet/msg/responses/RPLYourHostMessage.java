@@ -20,14 +20,14 @@ package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-public class RPLYourHostMessage implements Message {
+public class RPLYourHostMessage extends MessageUsername {
 
-    private final String nickname, serverName, version;
+    private final String serverName, version;
 
     public RPLYourHostMessage(String nickname, String serverName, String version) {
+        super(nickname);
         this.serverName = serverName;
         this.version = version;
-        this.nickname = nickname;
     }
 
     public String getVersion() {
@@ -36,9 +36,5 @@ public class RPLYourHostMessage implements Message {
 
     public String getServerName() {
         return serverName;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 }

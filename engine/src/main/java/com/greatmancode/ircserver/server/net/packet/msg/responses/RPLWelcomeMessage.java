@@ -20,20 +20,16 @@ package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-public class RPLWelcomeMessage implements Message {
+public class RPLWelcomeMessage extends MessageUsername {
 
-    private final String representation, nickname;
+    private final String representation;
 
     public RPLWelcomeMessage(String nickname, String representation) {
-        this.nickname = nickname;
+        super(nickname);
         this.representation = representation;
     }
 
     public String getRepresentation() {
         return representation;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 }

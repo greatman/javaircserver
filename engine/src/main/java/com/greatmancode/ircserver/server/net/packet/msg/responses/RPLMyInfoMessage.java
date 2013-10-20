@@ -20,11 +20,11 @@ package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-public class RPLMyInfoMessage implements Message {
+public class RPLMyInfoMessage extends MessageUsername {
 
-    private final String nickname, serverName, version, availableUserMode, availableChannelMode;
+    private final String serverName, version, availableUserMode, availableChannelMode;
     public RPLMyInfoMessage(String nickname, String serverName, String version, String availableUserMode, String availableChannelMode) {
-        this.nickname = nickname;
+        super(nickname);
         this.serverName = serverName;
         this.version = version;
         this.availableUserMode = availableUserMode;
@@ -45,9 +45,5 @@ public class RPLMyInfoMessage implements Message {
 
     public String getVersion() {
         return version;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 }

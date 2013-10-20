@@ -20,14 +20,50 @@ package com.greatmancode.ircserver.api.channel;
 
 import com.greatmancode.ircserver.api.client.Client;
 
-public interface Channel {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    public void addClient(Client client);
+public class Channel {
 
-    public void removeClient(Client client);
+    private List<Client> clientList = new ArrayList<>();
+    private Map<ChannelModes, List<String>> modeList = new HashMap<>();
 
-    public void sendMessage(Client client, String message);
+    public void addClient(Client client) {
+        clientList.add(client);
+        //TODO: Send the join packet
+    }
 
-    public void sendNotice(String message);
+    public void removeClient(Client client) {
+        clientList.remove(client);
+        //TODO: Send the leave packet;
+    }
+
+    public void sendMessage(Client sender, String message) {
+        if (modeList.containsKey(ChannelModes.NO_EXTERNAL_MESAGES) && !clientList.contains(sender)) {
+            return;
+        } else {
+            for (Client receiver : clientList) {
+                //TODO: Send the packet
+                //receiver.sendPacket();
+            }
+        }
+    }
+
+    public void sendNotice(Client sender, String message) {
+        if (modeList.containsKey(ChannelModes.NO_EXTERNAL_MESAGES) && !clientList.contains(sender)) {
+            return;
+        } else {
+            for (Client receiver : clientList) {
+                //TODO: Send the packet
+                //receiver.sendPacket();
+            }
+        }
+    }
+
+    public void changeMode(ChannelModes mode, String value) {
+        //Do whatever depending of the mode
+    }
 
 }

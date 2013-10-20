@@ -1,11 +1,11 @@
 package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
-import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-public class RPL_LUserClient implements Message {
+public class RPLLUserClientMessage extends MessageUsername {
 
     private final int userCount, serviceCount, serverCount;
-    public RPL_LUserClient(int userCount, int serviceCount, int serverCount) {
+    public RPLLUserClientMessage(String username, int userCount, int serviceCount, int serverCount) {
+        super(username);
         this.userCount = userCount;
         this.serviceCount = serviceCount;
         this.serverCount = serverCount;

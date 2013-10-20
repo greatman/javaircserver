@@ -113,6 +113,7 @@ public class IRCClient extends Client {
         }
     }
 
+    @Override
     public void sendPacket(Message message) {
         System.out.println("SENDING PACKET");
         getSocket().channel().writeAndFlush(message);

@@ -23,10 +23,7 @@ import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.IRCServer;
 import com.greatmancode.ircserver.server.net.packet.codec.NickCodec;
 import com.greatmancode.ircserver.server.net.packet.codec.UserCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.responses.RPLCreatedCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.responses.RPLMyInfoCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.responses.RPLWelcomeCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.responses.RPLYourHostCodec;
+import com.greatmancode.ircserver.server.net.packet.codec.responses.*;
 import com.greatmancode.ircserver.server.net.packet.handler.NickHandler;
 import com.greatmancode.ircserver.server.net.packet.handler.UserHandler;
 import com.greatmancode.ircserver.server.net.packet.msg.NickMessage;
@@ -39,10 +36,22 @@ public class IRCProtocol extends Protocol {
     public IRCProtocol() {
         registerPacket(NickCodec.class, new NickHandler());
         registerPacket(UserCodec.class, new UserHandler());
-        registerPacket(RPLCreatedCodec.class, null);
-        registerPacket(RPLMyInfoCodec.class, null);
+        //001
         registerPacket(RPLWelcomeCodec.class, null);
+        //002
         registerPacket(RPLYourHostCodec.class, null);
+        //003
+        registerPacket(RPLCreatedCodec.class, null);
+        //004
+        registerPacket(RPLMyInfoCodec.class, null);
+        //251
+        registerPacket(RPLLUserClientCodec.class, null);
+        //252
+        registerPacket(RPLLUserOPCodec.class, null);
+        //254
+        registerPacket(RPLLUserChannelsCodec.class, null);
+        //255
+        registerPacket(RPLLUserMeCodec.class, null);
     }
     @Override
     public MessageCodec<?> readHeader(String[] buffer) {
