@@ -21,6 +21,7 @@ package com.greatmancode.ircserver.server.net.decoder;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.IRCServer;
+import com.greatmancode.ircserver.server.net.packet.msg.MessageRepresentation;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -87,10 +88,15 @@ public class MessageEncoder extends MessageToMessageEncoder<Object> {
             if (codec == null) {
                 throw new IOException("Unknown message type: " + clazz + ".");
             }
-            final String messageBuf = codec.encode(message);
-            final String headerBuf = IRCServer.getInstance().getProtocol().writeHeader(codec, messageBuf);
-            System.out.println("FINAL OUTPUT:" + headerBuf + "\n");
-            out.add(Unpooled.copiedBuffer(headerBuf + "\n", charset));
+            String messageBuf = codec.encode(message);
+            if (msg instanceof MessageRepresentation) {
+                messageBuf = ":" + ((MessageRepresentation) msg).getUserRepresentation() + " " + messageBuf;
+            } else {
+                messageBuf = IRCServer.getInstance().getProtocol().writeHeader(codec, messageBuf);
+            }
+
+            System.out.println("FINAL OUTPUT:" + messageBuf + "\n");
+            out.add(Unpooled.copiedBuffer(messageBuf + "\n", charset));
         }
     }
 }

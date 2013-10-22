@@ -18,6 +18,7 @@
  */
 package com.greatmancode.ircserver.api;
 
+import com.greatmancode.ircserver.api.channel.ChannelManager;
 import com.greatmancode.ircserver.api.client.ClientManager;
 import com.greatmancode.ircserver.api.net.Protocol;
 import com.greatmancode.ircserver.api.parameters.ServerParameter;
@@ -33,6 +34,8 @@ public interface Server {
     public Protocol getProtocol();
 
     public ClientManager getClientManager();
+
+    public ChannelManager getChannelManager();
 
     public List<ServerParameter> getParameters();
 }

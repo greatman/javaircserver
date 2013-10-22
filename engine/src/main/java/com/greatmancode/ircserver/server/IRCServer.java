@@ -19,6 +19,7 @@
 package com.greatmancode.ircserver.server;
 
 import com.greatmancode.ircserver.api.Server;
+import com.greatmancode.ircserver.api.channel.ChannelManager;
 import com.greatmancode.ircserver.api.client.ClientManager;
 import com.greatmancode.ircserver.api.net.Protocol;
 import com.greatmancode.ircserver.api.parameters.ServerParameter;
@@ -42,6 +43,7 @@ public class IRCServer implements Server {
     public static final String version = "0.0.1";
     private IRCProtocol protocol = new IRCProtocol();
     private ClientManager clientManager = new ClientManager();
+    private ChannelManager channelManager = new ChannelManager();
     private static IRCServer instance;
 
     public IRCServer() {
@@ -83,6 +85,11 @@ public class IRCServer implements Server {
     @Override
     public ClientManager getClientManager() {
         return clientManager;
+    }
+
+    @Override
+    public ChannelManager getChannelManager() {
+        return channelManager;
     }
 
     @Override
