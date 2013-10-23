@@ -50,4 +50,9 @@ public class IRCChannelManager implements ChannelManager{
             channel.removeClient(client);
         }
     }
+
+    @Override
+    public Channel getChannel(String channel) {
+        return channels.get(channel);
+    }
 }

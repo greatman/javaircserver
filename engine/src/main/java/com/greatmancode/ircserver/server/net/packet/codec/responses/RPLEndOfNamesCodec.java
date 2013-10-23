@@ -28,6 +28,6 @@ public class RPLEndOfNamesCodec extends MessageCodec<RPLEndOfNamesMessage> {
     }
 
     public String encode(RPLEndOfNamesMessage message) {
-        return message.getChannelName() + " :End of NAMES list";
+        return message.getNickname() + " " + message.getChannelName() + " :End of NAMES list";
     }
 }

@@ -103,6 +103,11 @@ public class IRCClient extends Client {
         return Collections.unmodifiableList(channelList);
     }
 
+    @Override
+    public void sendMessage(Client client, String message) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     private void isReady() {
         System.out.println("USERNAME: " + getUsername() + " HOSTNAME:" + getHostname() + " NICKNAME:" + getNickname() + " REALNAME:" + getRealName());
         if (getUsername() != null && getHostname() != null && getNickname() != null && getRealName() != null) {

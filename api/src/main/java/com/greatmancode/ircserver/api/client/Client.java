@@ -46,6 +46,8 @@ public abstract class Client {
 
     public abstract List<Channel> getchannelList();
 
+    public abstract void sendMessage(Client client, String message);
+
     public String getRepresentation() {
         return getNickname() + "!" + getUsername() + "@" + getHostname();
     }

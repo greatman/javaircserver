@@ -22,11 +22,11 @@ import com.greatmancode.ircserver.api.channel.Channel;
 import com.greatmancode.ircserver.api.channel.ChannelModes;
 import com.greatmancode.ircserver.api.client.Client;
 import com.greatmancode.ircserver.server.net.packet.msg.JoinMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.PrivmsgMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLEndOfNamesMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLNameReplyMessage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class IRCChannel implements Channel {
 
@@ -34,34 +34,48 @@ public class IRCChannel implements Channel {
     private Map<ChannelModes, List<String>> modeList = new HashMap<>();
 
     private final String name;
+
     public IRCChannel(String name) {
         this.name = name;
     }
 
+    @Override
     public void addClient(Client client) {
         if (!clientList.contains(client)) {
             clientList.add(client);
             client.sendPacket(new JoinMessage(name, client.getRepresentation()));
+            List<String> clientlistEntry = new ArrayList<>();
+            for (Client clientEntry : clientList) {
+                System.out.println("ADDING " + clientEntry.getNickname());
+                clientlistEntry.add(clientEntry.getNickname());
+            }
+            client.sendPacket(new RPLNameReplyMessage(client.getNickname(), name, clientlistEntry.toArray(new String[clientlistEntry.size()])));
+            client.sendPacket(new RPLEndOfNamesMessage(client.getNickname(), name));
             //TODO: Send to everybody
         }
     }
 
+    @Override
     public void removeClient(Client client) {
         clientList.remove(client);
         //TODO: Send the leave packet;
     }
 
+    @Override
     public void sendMessage(Client sender, String message) {
         if (modeList.containsKey(ChannelModes.NO_EXTERNAL_MESAGES) && !clientList.contains(sender)) {
             return;
         } else {
             for (Client receiver : clientList) {
-                //TODO: Send the packet
-                //receiver.sendPacket();
+                if (receiver.equals(sender)) {
+                    continue;
+                }
+                receiver.sendPacket(new PrivmsgMessage(sender.getRepresentation(), name, message));
             }
         }
     }
 
+    @Override
     public void sendNotice(Client sender, String message) {
         if (modeList.containsKey(ChannelModes.NO_EXTERNAL_MESAGES) && !clientList.contains(sender)) {
             return;
@@ -73,8 +87,17 @@ public class IRCChannel implements Channel {
         }
     }
 
+    @Override
     public void changeMode(ChannelModes mode, String value) {
         //Do whatever depending of the mode
+    }
+
+    @Override
+    public Collection<String> getModeValues(ChannelModes mode) {
+        if (modeList.get(mode) == null) {
+            return Collections.unmodifiableList(new ArrayList<String>());
+        }
+        return Collections.unmodifiableCollection(modeList.get(mode));
     }
 
 }

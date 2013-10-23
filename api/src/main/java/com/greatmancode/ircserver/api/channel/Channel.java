@@ -20,10 +20,7 @@ package com.greatmancode.ircserver.api.channel;
 
 import com.greatmancode.ircserver.api.client.Client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface Channel {
 
@@ -36,5 +33,7 @@ public interface Channel {
     public abstract void sendNotice(Client sender, String message);
 
     public abstract void changeMode(ChannelModes mode, String value);
+
+    public abstract Collection<String> getModeValues(ChannelModes mode);
 
 }

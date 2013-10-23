@@ -26,6 +26,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.List;
 
 @ChannelHandler.Sharable
@@ -54,13 +55,34 @@ public class MessageDecoder extends MessageToMessageDecoder<ByteBuf> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
         String value = msg.toString(charset);
-        System.out.println("VALUES:" + value);
         String[] splittedValue = value.split(" ");
         MessageCodec<?> codec = IRCServer.getInstance().getProtocol().readHeader(splittedValue);
         Object decoded;
         System.out.println("THE CODEC:" + codec);
         String[] values = new String[splittedValue.length - 1];
         System.arraycopy(splittedValue, 1, values, 0 , values.length);
+
+        //We make the last value a full string if there's a : somewhere
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].contains(":")) {
+                String[] oldValues = values;
+                values = new String[i+1];
+                System.arraycopy(oldValues, 0, values, 0, i);
+                for (int ii = i; ii < oldValues.length; ii++) {
+                    if (ii == i) {
+                        values[i] = oldValues[ii].substring(1);
+                    } else {
+                        System.out.println(2);
+                        values[i] += oldValues[ii];
+                    }
+
+                    if (ii != (oldValues.length -1)) {
+                        values[i] += " ";
+                    }
+                }
+                break;
+            }
+        }
         if (codec != null) {
             Object obj = codec.decode(values);
             out.add(obj);

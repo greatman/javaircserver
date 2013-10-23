@@ -28,4 +28,6 @@ public interface ChannelManager {
     public abstract void joinChannel(Client client, String channelName);
 
     public abstract void leaveChannel(Client client, String channelName);
+
+    public abstract Channel getChannel(String channel);
 }

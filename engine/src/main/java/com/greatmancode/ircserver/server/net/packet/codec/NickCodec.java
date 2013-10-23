@@ -21,6 +21,8 @@ package com.greatmancode.ircserver.server.net.packet.codec;
 import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.net.packet.msg.NickMessage;
 
+import java.util.Arrays;
+
 public class NickCodec extends MessageCodec<NickMessage>{
 
     public NickCodec() {
@@ -29,6 +31,7 @@ public class NickCodec extends MessageCodec<NickMessage>{
 
     @Override
     public NickMessage decode(String[] message) {
+        System.out.println("NICK DECODER:" + Arrays.toString(message));
         return new NickMessage(message[0]);
     }
 

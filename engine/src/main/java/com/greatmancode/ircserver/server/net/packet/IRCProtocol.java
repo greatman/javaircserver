@@ -23,10 +23,12 @@ import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.IRCServer;
 import com.greatmancode.ircserver.server.net.packet.codec.JoinCodec;
 import com.greatmancode.ircserver.server.net.packet.codec.NickCodec;
+import com.greatmancode.ircserver.server.net.packet.codec.PrivmsgCodec;
 import com.greatmancode.ircserver.server.net.packet.codec.UserCodec;
 import com.greatmancode.ircserver.server.net.packet.codec.responses.*;
 import com.greatmancode.ircserver.server.net.packet.handler.JoinHandler;
 import com.greatmancode.ircserver.server.net.packet.handler.NickHandler;
+import com.greatmancode.ircserver.server.net.packet.handler.PrivmsgHandler;
 import com.greatmancode.ircserver.server.net.packet.handler.UserHandler;
 import com.greatmancode.ircserver.server.net.packet.msg.NickMessage;
 
@@ -39,6 +41,7 @@ public class IRCProtocol extends Protocol {
         registerPacket(NickCodec.class, new NickHandler());
         registerPacket(UserCodec.class, new UserHandler());
         registerPacket(JoinCodec.class, new JoinHandler());
+        registerPacket(PrivmsgCodec.class, new PrivmsgHandler());
         //001
         registerPacket(RPLWelcomeCodec.class, null);
         //002
@@ -55,6 +58,8 @@ public class IRCProtocol extends Protocol {
         registerPacket(RPLLUserChannelsCodec.class, null);
         //255
         registerPacket(RPLLUserMeCodec.class, null);
+        //353
+        registerPacket(RPLNameReplyCodec.class, null);
         //366
         registerPacket(RPLEndOfNamesCodec.class, null);
     }
