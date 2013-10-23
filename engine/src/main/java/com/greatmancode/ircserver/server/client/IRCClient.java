@@ -23,6 +23,7 @@ import com.greatmancode.ircserver.api.client.Client;
 import com.greatmancode.ircserver.api.client.UserMode;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 import com.greatmancode.ircserver.server.IRCServer;
+import com.greatmancode.ircserver.server.channel.IRCChannel;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLCreatedMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLMyInfoMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLWelcomeMessage;

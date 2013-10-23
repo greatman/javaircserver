@@ -25,45 +25,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Channel {
+public interface Channel {
 
-    private List<Client> clientList = new ArrayList<>();
-    private Map<ChannelModes, List<String>> modeList = new HashMap<>();
+    public abstract void addClient(Client client);
 
-    public void addClient(Client client) {
-        clientList.add(client);
-        //TODO: Send the join packet
-    }
+    public abstract void removeClient(Client client);
 
-    public void removeClient(Client client) {
-        clientList.remove(client);
-        //TODO: Send the leave packet;
-    }
+    public abstract void sendMessage(Client sender, String message);
 
-    public void sendMessage(Client sender, String message) {
-        if (modeList.containsKey(ChannelModes.NO_EXTERNAL_MESAGES) && !clientList.contains(sender)) {
-            return;
-        } else {
-            for (Client receiver : clientList) {
-                //TODO: Send the packet
-                //receiver.sendPacket();
-            }
-        }
-    }
+    public abstract void sendNotice(Client sender, String message);
 
-    public void sendNotice(Client sender, String message) {
-        if (modeList.containsKey(ChannelModes.NO_EXTERNAL_MESAGES) && !clientList.contains(sender)) {
-            return;
-        } else {
-            for (Client receiver : clientList) {
-                //TODO: Send the packet
-                //receiver.sendPacket();
-            }
-        }
-    }
-
-    public void changeMode(ChannelModes mode, String value) {
-        //Do whatever depending of the mode
-    }
+    public abstract void changeMode(ChannelModes mode, String value);
 
 }
