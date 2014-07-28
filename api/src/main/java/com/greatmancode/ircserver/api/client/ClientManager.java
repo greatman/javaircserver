@@ -40,7 +40,7 @@ public class ClientManager {
 
     public Client getClient(String nickname) {
         for (Client client : clientList) {
-            if (client.getNickname().equals(nickname)) {
+            if (client.getNickname() != null && client.getNickname().equals(nickname)) {
                 return client;
             }
         }

@@ -16,11 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with IRCServer Engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.server.net.packet.msg;
+package com.greatmancode.ircserver.server.net.packet.codec;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
+import com.greatmancode.ircserver.server.net.packet.msg.WhoMessage;
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+public class WhoCodec extends MessageCodec<WhoMessage> {
+
+    public WhoCodec() {
+        super(WhoMessage.class, "WHO");
+    }
+
+    public WhoMessage decode(String[] data) {
+        return new WhoMessage(data[0]);
     }
 }

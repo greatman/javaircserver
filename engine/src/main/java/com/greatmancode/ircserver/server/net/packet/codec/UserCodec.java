@@ -22,6 +22,7 @@ import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.net.packet.msg.UserMessage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class UserCodec extends MessageCodec<UserMessage>{
 
@@ -30,6 +31,7 @@ public class UserCodec extends MessageCodec<UserMessage>{
     }
 
     public UserMessage decode(String[] buffer) throws IOException {
-        return new UserMessage(buffer[0], Integer.parseInt(buffer[1]), buffer[2], buffer[3]);
+        System.out.println(Arrays.toString(buffer));
+        return new UserMessage(buffer[0], buffer[1], buffer[2], buffer[3]);
     }
 }

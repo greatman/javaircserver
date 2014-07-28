@@ -18,9 +18,17 @@
  */
 package com.greatmancode.ircserver.server.net.packet.msg;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+public class PongMessage implements Message {
+
+    private final String code;
+
+    public PongMessage(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
     }
 }

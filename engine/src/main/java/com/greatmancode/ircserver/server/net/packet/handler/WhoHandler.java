@@ -16,11 +16,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with IRCServer Engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.server.net.packet.msg;
+package com.greatmancode.ircserver.server.net.packet.handler;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+import com.greatmancode.ircserver.api.channel.Channel;
+import com.greatmancode.ircserver.api.client.Client;
+import com.greatmancode.ircserver.api.net.interfaces.MessageHandler;
+import com.greatmancode.ircserver.server.IRCServer;
+import com.greatmancode.ircserver.server.net.packet.msg.WhoMessage;
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+public class WhoHandler extends MessageHandler<WhoMessage> {
+    @Override
+    public void handle(Client session, WhoMessage message) {
+
+        //If it's a channel
+        if (message.getSearchString().startsWith("#")) {
+            Channel channel = IRCServer.getInstance().getChannelManager().getChannel(message.getSearchString());
+
+            if (channel != null) {
+                channel.sendWho(session);
+            }
+        }
     }
 }

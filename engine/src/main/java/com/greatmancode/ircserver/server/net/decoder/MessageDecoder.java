@@ -55,6 +55,7 @@ public class MessageDecoder extends MessageToMessageDecoder<ByteBuf> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
         String value = msg.toString(charset);
+        System.out.println("BUFFER:" + value);
         String[] splittedValue = value.split(" ");
         MessageCodec<?> codec = IRCServer.getInstance().getProtocol().readHeader(splittedValue);
         Object decoded;

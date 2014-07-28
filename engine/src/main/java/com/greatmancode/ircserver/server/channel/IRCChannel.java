@@ -21,10 +21,13 @@ package com.greatmancode.ircserver.server.channel;
 import com.greatmancode.ircserver.api.channel.Channel;
 import com.greatmancode.ircserver.api.channel.ChannelModes;
 import com.greatmancode.ircserver.api.client.Client;
+import com.greatmancode.ircserver.server.IRCServer;
 import com.greatmancode.ircserver.server.net.packet.msg.JoinMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.PrivmsgMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLEndOfNamesMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLEndOfWhoMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLNameReplyMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLWhoReplyMessage;
 
 import java.util.*;
 
@@ -37,6 +40,13 @@ public class IRCChannel implements Channel {
 
     public IRCChannel(String name) {
         this.name = name;
+        modeList.put(ChannelModes.TOPIC_LOCK, null);
+        modeList.put(ChannelModes.NO_EXTERNAL_MESAGES, null);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -51,6 +61,11 @@ public class IRCChannel implements Channel {
             }
             client.sendPacket(new RPLNameReplyMessage(client.getNickname(), name, clientlistEntry.toArray(new String[clientlistEntry.size()])));
             client.sendPacket(new RPLEndOfNamesMessage(client.getNickname(), name));
+            for (Client receiver : clientList) {
+                if (!receiver.equals(client)) {
+                    client.sendPacket(new JoinMessage(name, client.getRepresentation()));
+                }
+            }
             //TODO: Send to everybody
         }
     }
@@ -98,6 +113,25 @@ public class IRCChannel implements Channel {
             return Collections.unmodifiableList(new ArrayList<String>());
         }
         return Collections.unmodifiableCollection(modeList.get(mode));
+    }
+
+    @Override
+    public void sendWho(Client receiver) {
+        for (Client client : clientList) {
+            receiver.sendPacket(new RPLWhoReplyMessage(receiver.getNickname(), name, client.getUsername(), client.getHostname(), IRCServer.serverName, client.getNickname(), "0", client.getRealName()));
+        }
+        receiver.sendPacket(new RPLEndOfWhoMessage(receiver.getNickname(), name));
+    }
+
+    @Override
+    public String getModes() {
+        String result = "";
+        for (Map.Entry<ChannelModes, List<String>> modes : modeList.entrySet()) {
+            if (!modes.getKey().equals(ChannelModes.BAN)) {
+                result += modes.getKey().getValue();
+            }
+        }
+        return result;
     }
 
 }

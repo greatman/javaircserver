@@ -23,8 +23,8 @@ import com.greatmancode.ircserver.api.net.interfaces.Message;
 public class UserMessage implements Message {
 
     private final String username, unused, realName;
-    private final int mode;
-    public UserMessage(String username, int mode, String unused, String realName) {
+    private final String mode;
+    public UserMessage(String username, String mode, String unused, String realName) {
         this.username = username;
         this.mode = mode;
         this.unused = unused;
@@ -35,7 +35,7 @@ public class UserMessage implements Message {
         return username;
     }
 
-    public int getMode() {
+    public String getMode() {
         return mode;
     }
 

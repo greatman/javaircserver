@@ -16,11 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with IRCServer Engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.server.net.packet.msg;
+package com.greatmancode.ircserver.server.net.packet.handler;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+import com.greatmancode.ircserver.api.client.Client;
+import com.greatmancode.ircserver.api.net.interfaces.MessageHandler;
+import com.greatmancode.ircserver.server.net.packet.msg.PingMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.PongMessage;
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+public class PingHandler extends MessageHandler<PingMessage>{
+    @Override
+    public void handle(Client session, PingMessage message) {
+        session.sendPacket(new PongMessage(message.getCode()));
     }
 }

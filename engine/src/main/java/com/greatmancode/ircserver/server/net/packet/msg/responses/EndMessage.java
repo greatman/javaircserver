@@ -16,11 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with IRCServer Engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.server.net.packet.msg;
+package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+public abstract class EndMessage extends MessageUsername {
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+    private final String channelName;
+    public EndMessage(String nickname, String channelName) {
+        super(nickname);
+        this.channelName = channelName;
+    }
+
+    public String getChannelName() {
+        return channelName;
     }
 }

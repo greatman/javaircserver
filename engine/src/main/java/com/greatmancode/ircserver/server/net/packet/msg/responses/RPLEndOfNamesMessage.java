@@ -20,19 +20,9 @@ package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-public class RPLEndOfNamesMessage implements Message {
+public class RPLEndOfNamesMessage extends EndMessage {
 
-    private final String channelName, nickname;
     public RPLEndOfNamesMessage(String nickname, String channelName) {
-        this.nickname = nickname;
-        this.channelName = channelName;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getChannelName() {
-        return channelName;
+        super(nickname, channelName);
     }
 }

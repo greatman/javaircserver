@@ -18,9 +18,18 @@
  */
 package com.greatmancode.ircserver.server.net.packet.msg;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+import com.greatmancode.ircserver.api.net.interfaces.Message;
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+public class WhoMessage implements Message {
+
+    //Receive
+    private final String searchString;
+
+    public WhoMessage(String searchString) {
+        this.searchString = searchString;
+    }
+
+    public String getSearchString() {
+        return searchString;
     }
 }

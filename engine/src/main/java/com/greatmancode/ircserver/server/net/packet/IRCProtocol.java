@@ -21,15 +21,9 @@ package com.greatmancode.ircserver.server.net.packet;
 import com.greatmancode.ircserver.api.net.Protocol;
 import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.IRCServer;
-import com.greatmancode.ircserver.server.net.packet.codec.JoinCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.NickCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.PrivmsgCodec;
-import com.greatmancode.ircserver.server.net.packet.codec.UserCodec;
+import com.greatmancode.ircserver.server.net.packet.codec.*;
 import com.greatmancode.ircserver.server.net.packet.codec.responses.*;
-import com.greatmancode.ircserver.server.net.packet.handler.JoinHandler;
-import com.greatmancode.ircserver.server.net.packet.handler.NickHandler;
-import com.greatmancode.ircserver.server.net.packet.handler.PrivmsgHandler;
-import com.greatmancode.ircserver.server.net.packet.handler.UserHandler;
+import com.greatmancode.ircserver.server.net.packet.handler.*;
 import com.greatmancode.ircserver.server.net.packet.msg.NickMessage;
 
 import java.util.HashMap;
@@ -42,6 +36,10 @@ public class IRCProtocol extends Protocol {
         registerPacket(UserCodec.class, new UserHandler());
         registerPacket(JoinCodec.class, new JoinHandler());
         registerPacket(PrivmsgCodec.class, new PrivmsgHandler());
+        registerPacket(PingCodec.class, new PingHandler());
+        registerPacket(PongCodec.class, null);
+        registerPacket(WhoCodec.class, new WhoHandler());
+        registerPacket(ModeCodec.class, new ModeHandler());
         //001
         registerPacket(RPLWelcomeCodec.class, null);
         //002
@@ -58,10 +56,20 @@ public class IRCProtocol extends Protocol {
         registerPacket(RPLLUserChannelsCodec.class, null);
         //255
         registerPacket(RPLLUserMeCodec.class, null);
+        //315
+        registerPacket(RPLEndOfWhoCodec.class, null);
+        //352
+        registerPacket(RPLWhoReplyCodec.class, null);
         //353
         registerPacket(RPLNameReplyCodec.class, null);
         //366
         registerPacket(RPLEndOfNamesCodec.class, null);
+        //368
+        registerPacket(RPLEndOfBanListCodec.class, null);
+        //324
+        registerPacket(RPLChannelModeIsCodec.class, null);
+        //433
+        registerPacket(RPLNicknameInUseCodec.class, null);
     }
     @Override
     public MessageCodec<?> readHeader(String[] buffer) {

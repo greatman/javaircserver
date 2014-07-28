@@ -16,11 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with IRCServer Engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.ircserver.server.net.packet.msg;
+package com.greatmancode.ircserver.server.net.packet.codec;
 
-public class MessageHeaderRepresentation extends MessageRepresentation {
+import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
+import com.greatmancode.ircserver.server.net.packet.msg.PongMessage;
 
-    public MessageHeaderRepresentation(String userRepresentation) {
-        super(userRepresentation);
+public class PongCodec extends MessageCodec<PongMessage> {
+
+    public PongCodec() {
+        super(PongMessage.class, "PONG");
+    }
+
+    public String encode(PongMessage message) {
+        System.out.println("PONG ENCODE");
+        return " :" + message.getCode();
     }
 }

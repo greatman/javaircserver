@@ -35,27 +35,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
-/**
- * Encodes the requested {@link String} into a {@link ByteBuf}.
- * A typical setup for a text-based line protocol in a TCP/IP socket would be:
- * <pre>
- * {@link ChannelPipeline} pipeline = ...;
- *
- * // Decoders
- * pipeline.addLast("frameDecoder", new {@link LineBasedFrameDecoder}(80));
- * pipeline.addLast("stringDecoder", new {@link StringDecoder}(CharsetUtil.UTF_8));
- *
- * // Encoder
- * pipeline.addLast("stringEncoder", new {@link io.netty.handler.codec.string.MessageEncoder}(CharsetUtil.UTF_8));
- * </pre>
- * and then you can use a {@link String} instead of a {@link ByteBuf}
- * as a message:
- * <pre>
- * void channelRead({@link ChannelHandlerContext} ctx, {@link String} msg) {
- *     ch.write("Did you say '" + msg + "'?\n");
- * }
- * </pre>
- */
 @Sharable
 public class MessageEncoder extends MessageToMessageEncoder<Object> {
 

@@ -52,13 +52,14 @@ public class IRCServerNetworkHandler extends SimpleChannelInboundHandler<Message
     }
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        cause.printStackTrace();
         ctx.close();
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message message) throws Exception {
         MessageHandler<Message> handler = (MessageHandler<Message>) IRCServer.getInstance().getProtocol().getHandlerLookupService().find(message.getClass());
-
+        System.out.println("THE HANDLER:" + handler);
         if (handler != null) {
             try {
                 handler.handle(ctx.attr(IRCServerNetworkHandler.CLIENT).get(), message);

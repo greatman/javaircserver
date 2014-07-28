@@ -29,6 +29,6 @@ public class RPLWhoReplyCodec extends MessageCodec<RPLWhoReplyMessage>{
     }
 
     public String encode(RPLWhoReplyMessage message) {
-        return message.getUsername() + " " + message.getChannel() + " " + message.getWhoUsername() + " " + message.getHostname() + " " + IRCServer.serverName + " " + message.getNickname();
+        return message.getReceiverNickname() + " " + message.getChannel() + " " + message.getUsername() + " " + message.getHostname() + " " + IRCServer.serverName + " " + message.getNickname() + " :" + message.getHopCount() + " " + message.getRealName();
     }
 }

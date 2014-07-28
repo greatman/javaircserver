@@ -28,7 +28,8 @@ import java.net.InetSocketAddress;
 public class UserHandler extends MessageHandler<UserMessage> {
     @Override
     public void handle(Client session, UserMessage message) {
-        session.setUsername(message.getUsername());
+        System.out.println("HANDLING USER");
+        session.setUsername("~" + message.getUsername());
         session.setRealName(message.getRealName());
         System.out.println(session.getSocket().channel().remoteAddress());
         session.setHostname(((InetSocketAddress)session.getSocket().channel().remoteAddress()).getHostName());

@@ -24,6 +24,8 @@ import java.util.*;
 
 public interface Channel {
 
+    public abstract String getName();
+
     public abstract void addClient(Client client);
 
     public abstract void removeClient(Client client);
@@ -36,4 +38,7 @@ public interface Channel {
 
     public abstract Collection<String> getModeValues(ChannelModes mode);
 
+    public abstract void sendWho(Client receiver);
+
+    public abstract String getModes();
 }

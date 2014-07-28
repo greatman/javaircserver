@@ -22,27 +22,34 @@ import com.greatmancode.ircserver.api.net.interfaces.Message;
 
 public class RPLWhoReplyMessage implements Message {
 
-    private final String username, channel, whoUsername, hostname, server, nickname;
+    //Response
+    private final String receiverNickname, channel, username, hostname, server, nickname, hopCount, realName;
 
-    public RPLWhoReplyMessage(String username, String channel, String whoUsername, String hostname, String server, String nickname) {
-        this.username = username;
+    public RPLWhoReplyMessage(String receiverNickname, String channel, String username, String hostname, String server, String nickname, String hopCount, String realName) {
+        this.receiverNickname = receiverNickname;
         this.channel = channel;
-        this.whoUsername = whoUsername;
+        this.username = username;
         this.hostname = hostname;
         this.server = server;
         this.nickname = nickname;
+        this.hopCount = hopCount;
+        this.realName = realName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getReceiverNickname() {
+        return receiverNickname;
     }
 
-    public String getWhoUsername() {
-        return whoUsername;
+    public String getRealName() {
+        return realName;
     }
 
-    public String getChannel() {
-        return channel;
+    public String getHopCount() {
+        return hopCount;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     public String getServer() {
@@ -53,7 +60,11 @@ public class RPLWhoReplyMessage implements Message {
         return hostname;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getChannel() {
+        return channel;
     }
 }
