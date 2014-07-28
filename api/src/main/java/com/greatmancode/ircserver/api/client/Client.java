@@ -18,13 +18,14 @@
  */
 package com.greatmancode.ircserver.api.client;
 
+import com.greatmancode.ircserver.api.Representable;
 import com.greatmancode.ircserver.api.channel.Channel;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;
 
-public abstract class Client {
+public abstract class Client implements Representable {
 
     public abstract ChannelHandlerContext getSocket();
 
@@ -48,6 +49,7 @@ public abstract class Client {
 
     public abstract void sendMessage(Client client, String message);
 
+    @Override
     public String getRepresentation() {
         return getNickname() + "!" + getUsername() + "@" + getHostname();
     }

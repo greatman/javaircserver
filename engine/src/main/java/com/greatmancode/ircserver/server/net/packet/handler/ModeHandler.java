@@ -20,7 +20,11 @@ public class ModeHandler extends MessageHandler<ModeMessage>{
             Channel channel = IRCServer.getInstance().getChannelManager().getChannel(message.getChannel());
 
             if (channel != null) {
-                if (message.getFlag() != null) {
+                //We first check if we have a general /mode #channel
+                if (message.getFlag() == null) {
+                    //The client request information about the channel. Let's give them to him
+                    session.sendPacket(new RPLChannelModeIsMessage(session.getNickname(), channel.getName(), channel.getModes()));
+                } else if (message.getFlag() != null && message.getUsers() == null) { //Are we setting channel settings?
                     ChannelModes mode = ChannelModes.getValue(message.getFlag());
                     Collection<String> values = channel.getModeValues(mode);
                     for (String value : values) {
@@ -30,8 +34,15 @@ public class ModeHandler extends MessageHandler<ModeMessage>{
                         session.sendPacket(new RPLEndOfBanListMessage(session.getNickname(), channel.getName()));
                     }
                 } else {
-                    //The client request information about the channel. Let's give them to him
-                    session.sendPacket(new RPLChannelModeIsMessage(session.getNickname(), channel.getName(), channel.getModes()));
+                    String mode = "";
+                    for (int i = 0; i < message.getFlag().length(); i++) {
+                        //If it is the first character, it is to set if we add or remove a user from a mode
+                        if (i == 0) {
+                            mode = Character.toString(message.getFlag().charAt(i));
+                            continue;
+                        }
+                        channel.changeMode(session, ChannelModes.getValue(Character.toString(message.getFlag().charAt(i))), mode.equals("+"), message.getUsers()[i - 1]);
+                    }
                 }
             }
         }

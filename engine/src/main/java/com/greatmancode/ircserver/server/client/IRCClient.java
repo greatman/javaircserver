@@ -121,7 +121,7 @@ public class IRCClient extends Client {
 
     @Override
     public void sendPacket(Message message) {
-        System.out.println("SENDING PACKET");
+        System.out.println("SENDING PACKET:" + message.toString() +" to " + getNickname());
         getSocket().channel().writeAndFlush(message);
     }
 }

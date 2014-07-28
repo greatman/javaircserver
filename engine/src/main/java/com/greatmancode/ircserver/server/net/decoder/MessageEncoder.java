@@ -70,9 +70,9 @@ public class MessageEncoder extends MessageToMessageEncoder<Object> {
             }
             String messageBuf = codec.encode(message);
             if (msg instanceof MessageHeaderRepresentation) {
-                messageBuf = ":" + ((MessageRepresentation) msg).getUserRepresentation() + " " + codec.getOpcode() + " "+ messageBuf;
+                messageBuf = IRCServer.getInstance().getProtocol().writeHeader(((MessageHeaderRepresentation) msg).getRepresentation(), codec, messageBuf);
             } else if (msg instanceof MessageRepresentation) {
-                messageBuf = ":" + ((MessageRepresentation) msg).getUserRepresentation() + " " + messageBuf;
+                messageBuf = ":" + ((MessageRepresentation) msg).getRepresentation().getRepresentation() + " " + messageBuf;
             } else {
                 messageBuf = IRCServer.getInstance().getProtocol().writeHeader(codec, messageBuf);
             }

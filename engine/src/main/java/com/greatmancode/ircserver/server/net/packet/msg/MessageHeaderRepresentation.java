@@ -18,9 +18,11 @@
  */
 package com.greatmancode.ircserver.server.net.packet.msg;
 
+import com.greatmancode.ircserver.api.Representable;
+
 public class MessageHeaderRepresentation extends MessageRepresentation {
 
-    public MessageHeaderRepresentation(String userRepresentation) {
+    public MessageHeaderRepresentation(Representable userRepresentation) {
         super(userRepresentation);
     }
 }

@@ -18,17 +18,18 @@
  */
 package com.greatmancode.ircserver.server.net.packet.msg;
 
+import com.greatmancode.ircserver.api.Representable;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
 public abstract class MessageRepresentation implements Message {
 
-    private final String userRepresentation;
+    private final Representable representation;
 
-    public MessageRepresentation(String userRepresentation) {
-        this.userRepresentation = userRepresentation;
+    public MessageRepresentation(Representable representation) {
+        this.representation = representation;
     }
 
-    public String getUserRepresentation() {
-        return userRepresentation;
+    public Representable getRepresentation() {
+        return representation;
     }
 }

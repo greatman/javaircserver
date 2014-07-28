@@ -19,6 +19,8 @@
 package com.greatmancode.ircserver.server.net.packet.msg;
 
 
+import com.greatmancode.ircserver.api.Representable;
+
 public class JoinMessage extends MessageRepresentation {
 
     private final String channel;
@@ -27,7 +29,7 @@ public class JoinMessage extends MessageRepresentation {
         this.channel = channel;
     }
 
-    public JoinMessage(String channel, String representation) {
+    public JoinMessage(String channel, Representable representation) {
         super(representation);
         this.channel = channel;
     }
@@ -38,7 +40,7 @@ public class JoinMessage extends MessageRepresentation {
 
     @Override
     public String toString() {
-        return channel;
+        return "C:" +channel + " R:" + getRepresentation().getRepresentation();
     }
 
     @Override

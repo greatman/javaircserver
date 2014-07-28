@@ -18,6 +18,7 @@
  */
 package com.greatmancode.ircserver.server.net.packet.msg;
 
+import com.greatmancode.ircserver.api.Representable;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
 public class PrivmsgMessage extends MessageHeaderRepresentation {
@@ -30,7 +31,7 @@ public class PrivmsgMessage extends MessageHeaderRepresentation {
         this.message = message;
     }
 
-    public PrivmsgMessage(String representation, String channel, String message) {
+    public PrivmsgMessage(Representable representation, String channel, String message) {
         super(representation);
         this.channel = channel;
         this.message = message;

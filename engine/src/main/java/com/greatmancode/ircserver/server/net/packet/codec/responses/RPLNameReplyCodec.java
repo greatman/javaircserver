@@ -18,6 +18,8 @@
  */
 package com.greatmancode.ircserver.server.net.packet.codec.responses;
 
+import com.greatmancode.ircserver.api.channel.ChannelModes;
+import com.greatmancode.ircserver.api.client.Client;
 import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLNameReplyMessage;
 
@@ -28,9 +30,12 @@ public class RPLNameReplyCodec extends MessageCodec<RPLNameReplyMessage>{
     }
 
     public String encode(RPLNameReplyMessage message) {
-        String result = message.getNickname() + " = " + message.getChannel() + " :";
-        for (String client : message.getClients()) {
-            result += client + " ";
+        String result = message.getNickname() + " = " + message.getChannel().getName() + " :";
+        for (Client client : message.getClients()) {
+            if (message.getChannel().getModeValues(ChannelModes.OPERATOR).contains(client.getNickname())) {
+                result += "@";
+            }
+            result += client.getNickname() + " ";
         }
         return result;
     }

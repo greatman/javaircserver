@@ -18,6 +18,7 @@
  */
 package com.greatmancode.ircserver.api.net;
 
+import com.greatmancode.ircserver.api.Representable;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.api.net.interfaces.MessageHandler;
@@ -69,4 +70,6 @@ public abstract class Protocol {
      * @return The buffer with the packet header
      */
     public abstract String writeHeader(MessageCodec<?> codec, String data);
+
+    public abstract String writeHeader(Representable client, MessageCodec<?> codec, String data);
 }

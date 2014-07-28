@@ -18,6 +18,7 @@
  */
 package com.greatmancode.ircserver.server.net.packet;
 
+import com.greatmancode.ircserver.api.Representable;
 import com.greatmancode.ircserver.api.net.Protocol;
 import com.greatmancode.ircserver.api.net.interfaces.MessageCodec;
 import com.greatmancode.ircserver.server.IRCServer;
@@ -81,5 +82,10 @@ public class IRCProtocol extends Protocol {
     @Override
     public String writeHeader(MessageCodec<?> codec, String data) {
         return ":" + IRCServer.serverName + " " + codec.getOpcode() + " " +data;
+    }
+
+    @Override
+    public String writeHeader(Representable client, MessageCodec<?> codec, String data) {
+        return ":" + client.getRepresentation() + " " + codec.getOpcode() + " " + data;
     }
 }

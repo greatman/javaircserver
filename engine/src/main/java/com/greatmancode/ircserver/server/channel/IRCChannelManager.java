@@ -22,6 +22,7 @@ import com.greatmancode.ircserver.api.channel.Channel;
 import com.greatmancode.ircserver.api.channel.ChannelManager;
 import com.greatmancode.ircserver.api.channel.ChannelModes;
 import com.greatmancode.ircserver.api.client.Client;
+import com.greatmancode.ircserver.server.IRCServer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,10 +35,10 @@ public class IRCChannelManager implements ChannelManager{
         Channel channel = channels.get(channelName);
         if (channel == null) {
             channel = new IRCChannel(channelName);
-            channel.changeMode(ChannelModes.NO_EXTERNAL_MESAGES, null);
-            channel.changeMode(ChannelModes.TOPIC_LOCK, null);
+            channel.changeMode(IRCServer.getInstance(), ChannelModes.NO_EXTERNAL_MESAGES, true, null);
+            channel.changeMode(IRCServer.getInstance(), ChannelModes.TOPIC_LOCK, true, null);
             channel.addClient(client);
-            channel.changeMode(ChannelModes.OPERATOR, client.getNickname());
+            channel.changeMode(IRCServer.getInstance(), ChannelModes.OPERATOR, true, client.getNickname());
             channels.put(channelName,channel);
         } else {
             channel.addClient(client);

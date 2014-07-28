@@ -18,14 +18,16 @@
  */
 package com.greatmancode.ircserver.server.net.packet.msg.responses;
 
+import com.greatmancode.ircserver.api.channel.Channel;
+import com.greatmancode.ircserver.api.client.Client;
 import com.greatmancode.ircserver.api.net.interfaces.Message;
 
 public class RPLNameReplyMessage implements Message {
 
-    private final String[] clients;
-    private final String channel;
+    private final Client[] clients;
+    private final Channel channel;
     private final String nickname;
-    public RPLNameReplyMessage(String nickname, String channel, String[] clients) {
+    public RPLNameReplyMessage(String nickname, Channel channel, Client[] clients) {
         this.nickname = nickname;
         this.channel = channel;
         this.clients = clients;
@@ -35,11 +37,11 @@ public class RPLNameReplyMessage implements Message {
         return nickname;
     }
 
-    public String getChannel() {
+    public Channel getChannel() {
         return channel;
     }
 
-    public String[] getClients() {
+    public Client[] getClients() {
         return clients;
     }
 }

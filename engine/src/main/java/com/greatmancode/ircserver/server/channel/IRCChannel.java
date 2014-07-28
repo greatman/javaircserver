@@ -18,11 +18,13 @@
  */
 package com.greatmancode.ircserver.server.channel;
 
+import com.greatmancode.ircserver.api.Representable;
 import com.greatmancode.ircserver.api.channel.Channel;
 import com.greatmancode.ircserver.api.channel.ChannelModes;
 import com.greatmancode.ircserver.api.client.Client;
 import com.greatmancode.ircserver.server.IRCServer;
 import com.greatmancode.ircserver.server.net.packet.msg.JoinMessage;
+import com.greatmancode.ircserver.server.net.packet.msg.ModeMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.PrivmsgMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLEndOfNamesMessage;
 import com.greatmancode.ircserver.server.net.packet.msg.responses.RPLEndOfWhoMessage;
@@ -40,8 +42,6 @@ public class IRCChannel implements Channel {
 
     public IRCChannel(String name) {
         this.name = name;
-        modeList.put(ChannelModes.TOPIC_LOCK, null);
-        modeList.put(ChannelModes.NO_EXTERNAL_MESAGES, null);
     }
 
     @Override
@@ -53,17 +53,14 @@ public class IRCChannel implements Channel {
     public void addClient(Client client) {
         if (!clientList.contains(client)) {
             clientList.add(client);
-            client.sendPacket(new JoinMessage(name, client.getRepresentation()));
-            List<String> clientlistEntry = new ArrayList<>();
-            for (Client clientEntry : clientList) {
-                System.out.println("ADDING " + clientEntry.getNickname());
-                clientlistEntry.add(clientEntry.getNickname());
-            }
-            client.sendPacket(new RPLNameReplyMessage(client.getNickname(), name, clientlistEntry.toArray(new String[clientlistEntry.size()])));
+            client.sendPacket(new JoinMessage(name, client));
+            client.sendPacket(new RPLNameReplyMessage(client.getNickname(), this, clientList.toArray(new Client[clientList.size()])));
             client.sendPacket(new RPLEndOfNamesMessage(client.getNickname(), name));
             for (Client receiver : clientList) {
+                System.out.println("RECEIVER NAME IS :" + receiver.getNickname());
                 if (!receiver.equals(client)) {
-                    client.sendPacket(new JoinMessage(name, client.getRepresentation()));
+                    System.out.println("IT ISN'T THE ORIGINAL GUY");
+                    receiver.sendPacket(new JoinMessage(name, client));
                 }
             }
             //TODO: Send to everybody
@@ -85,7 +82,7 @@ public class IRCChannel implements Channel {
                 if (receiver.equals(sender)) {
                     continue;
                 }
-                receiver.sendPacket(new PrivmsgMessage(sender.getRepresentation(), name, message));
+                receiver.sendPacket(new PrivmsgMessage(sender, name, message));
             }
         }
     }
@@ -103,8 +100,31 @@ public class IRCChannel implements Channel {
     }
 
     @Override
-    public void changeMode(ChannelModes mode, String value) {
+    public void changeMode(Representable changer, ChannelModes mode, boolean add, String value) {
         //Do whatever depending of the mode
+        System.out.println("SETTING MODE " + mode + " A: " + add + " V:" + value);
+        if (mode.equals(ChannelModes.OPERATOR)) {
+            if (!modeList.containsKey(ChannelModes.OPERATOR)) {
+                modeList.put(ChannelModes.OPERATOR, new ArrayList<String>());
+            }
+            if (add) {
+                modeList.get(ChannelModes.OPERATOR).add(value);
+                for (Client client : clientList) {
+                    client.sendPacket(new ModeMessage(changer, getName(), "+o", value));
+                }
+            } else {
+                modeList.get(ChannelModes.OPERATOR).remove(value);
+                for (Client client : clientList) {
+                    client.sendPacket(new ModeMessage(changer, getName(), "-o", value));
+                }
+            }
+        } else {
+            if (add) {
+                modeList.put(mode, null);
+            } else {
+                modeList.remove(mode);
+            }
+        }
     }
 
     @Override
@@ -127,7 +147,7 @@ public class IRCChannel implements Channel {
     public String getModes() {
         String result = "";
         for (Map.Entry<ChannelModes, List<String>> modes : modeList.entrySet()) {
-            if (!modes.getKey().equals(ChannelModes.BAN)) {
+            if (!modes.getKey().equals(ChannelModes.BAN) && !modes.getKey().equals(ChannelModes.OPERATOR)) {
                 result += modes.getKey().getValue();
             }
         }

@@ -25,7 +25,7 @@ import com.greatmancode.ircserver.api.parameters.ServerParameter;
 
 import java.util.List;
 
-public interface Server {
+public interface Server extends Representable{
 
     public void onStart();
 
