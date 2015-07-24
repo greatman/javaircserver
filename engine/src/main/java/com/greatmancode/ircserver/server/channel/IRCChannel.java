@@ -118,7 +118,24 @@ public class IRCChannel implements Channel {
                     client.sendPacket(new ModeMessage(changer, getName(), "-o", value));
                 }
             }
-        } else {
+        }
+        else if (mode.equals(ChannelModes.VOICE)) {
+            if (!modeList.containsKey(ChannelModes.VOICE)) {
+                modeList.put(ChannelModes.VOICE, new ArrayList<String>());
+            }
+            if (add) {
+                modeList.get(ChannelModes.VOICE).add(value);
+                for (Client client : clientList) {
+                    client.sendPacket(new ModeMessage(changer, getName(), "+v", value));
+                }
+            } else {
+                modeList.get(ChannelModes.OPERATOR).remove(value);
+                for (Client client : clientList) {
+                    client.sendPacket(new ModeMessage(changer, getName(), "-v", value));
+                }
+            }
+        }
+        else {
             if (add) {
                 modeList.put(mode, null);
             } else {
